@@ -17,6 +17,20 @@ namespace InputSystem
         {
             if (dragDropManager.CurrentDraggedObject != null)
             {
+                // Check for potential pins
+                IPin nearbyPin = dragDropManager.PinDetector.GetPinNearPosition(Input.mousePosition);
+                
+                if (nearbyPin != null)
+                {
+                    var draggable = dragDropManager.CurrentDraggedObject.GetComponent<IDraggable>();
+                    if (draggable != null && draggable.CanBePinnedTo(nearbyPin))
+                    {
+                        dragDropManager.CurrentPin = nearbyPin;
+                        (stateMachine as DragDropStateMachine)?.HandleTrigger(DragDropTrigger.NearPin);
+                        return;
+                    }
+                }
+
                 MoveDraggedObject(dragDropManager.CurrentDraggedObject, Input.mousePosition);
             }
 

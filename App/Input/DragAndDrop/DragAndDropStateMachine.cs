@@ -5,12 +5,6 @@ using App.Utility.StateMachine;
 namespace InputSystem
 {
 
-    public enum DragDropTrigger
-    {
-        StartDrag,
-        EndDrag
-    }
-    
     public class DragDropStateMachine : IStateMachine
     {
         private IState currentState;
